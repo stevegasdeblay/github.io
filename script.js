@@ -40,7 +40,7 @@
     section.classList.add('reveal');
   });
 
-  const childSelectors = '.card, .timeline-item, .skill-table-wrap, .skill-legend, .subsection-title, .action-plan-grid > .card, .about-stats .stat, .contact-item, .aspirations-grid .aspiration, .journey-node';
+  const childSelectors = '.card, .timeline-item, .skill-table-wrap, .skill-legend, .subsection-title, .action-plan-grid > .card, .about-stats .stat, .contact-item, .aspirations-grid .aspiration, .journey-node, .li-rec-card';
   document.querySelectorAll(childSelectors).forEach((el) => {
     el.classList.add('reveal-child');
   });
@@ -82,26 +82,26 @@
     centerObserver.observe(el);
   });
 
-  // ─── Google Chat feed: stacked → spread on scroll + hover zoom ───
-  const gchatStream = document.getElementById('gchatStream');
-  if (gchatStream) {
-    const msgs = Array.from(gchatStream.querySelectorAll('.gchat-msg'));
+  // ─── Kudos stream: stacked → spread on scroll + hover zoom ───
+  const kudosStream = document.getElementById('kudosStream');
+  if (kudosStream) {
+    const msgs = Array.from(kudosStream.querySelectorAll('.kudos-msg'));
     msgs.forEach((msg, i) => {
-      msg.style.transitionDelay = `${i * 70}ms`;
+      msg.style.transitionDelay = `${i * 60}ms`;
     });
 
-    const gchatObserver = new IntersectionObserver(
+    const kudosObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            gchatStream.classList.add('spread');
-            gchatObserver.unobserve(entry.target);
+            kudosStream.classList.add('spread');
+            kudosObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.15 }
     );
-    gchatObserver.observe(gchatStream);
+    kudosObserver.observe(kudosStream);
 
     msgs.forEach((msg, i) => {
       msg.addEventListener('mouseenter', () => {
