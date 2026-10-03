@@ -467,8 +467,8 @@ a:hover {
   display: flex;
   gap: 10px;
   overflow-x: auto;
-  padding: 40px 12px;
-  margin: -30px 0;
+  overflow-y: visible;
+  padding: 8px 4px;
   scroll-snap-type: x mandatory;
 }
 
@@ -492,10 +492,11 @@ a:hover {
 }
 
 .interest-thumb {
-  min-width: 90px;
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
+  min-width: 110px;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  background: var(--bg-1);
   border: none;
   border-radius: 10px;
   scroll-snap-align: start;
@@ -517,9 +518,9 @@ a:hover {
 }
 
 .interest-thumb:hover {
-  transform: scale(1.8);
+  transform: scale(1.4);
   z-index: 999;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 }
 
@@ -529,20 +530,12 @@ a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.interest-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.interest-tag {
-  display: inline-block;
+.scroll-hint {
+  text-align: center;
   font-size: 11px;
-  font-weight: 500;
-  color: var(--blue);
-  background: var(--blue-light);
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  letter-spacing: 1px;
+  margin-top: 2px;
 }
 
 /* ─── Timeline / Experience ─── */
@@ -1029,11 +1022,15 @@ a:hover {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-0);
-  margin: 32px 0 16px;
+  margin: 40px 0 16px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border-light);
 }
 
 .subsection-title:first-of-type {
   margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 /* ─── Skill Mapping Legend ─── */
@@ -1277,6 +1274,153 @@ a:hover {
   color: var(--text-2);
 }
 
+/* ─── Task Wheel ─── */
+.wheel-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 36px;
+}
+
+.wheel-stage {
+  position: relative;
+  width: 290px;
+  height: 290px;
+  flex-shrink: 0;
+}
+
+#taskWheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+#taskWheel.wheel-spinning {
+  transition: transform 4.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+.wheel-hit-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.wheel-pointer {
+  pointer-events: none;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top: 22px solid var(--text-0);
+  z-index: 10;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.18));
+}
+
+.wheel-spin-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-0);
+  border: 3px solid var(--border);
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-0);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.25s ease, color 0.25s ease,
+              border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.wheel-spin-btn:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+  box-shadow: 0 4px 14px rgba(26,115,232,0.4);
+}
+
+.wheel-spin-btn:active {
+  transform: translate(-50%, -50%) scale(0.93);
+}
+
+.wheel-detail {
+  flex: 1;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+}
+
+.wheel-detail-empty {
+  width: 100%;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.wheel-detail-content {
+  width: 100%;
+  padding: 24px 28px;
+  border-left: 4px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--bg-1);
+  animation: wheelReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes wheelReveal {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.wheel-detail-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-0);
+  margin-bottom: 10px;
+}
+
+.wheel-detail-desc {
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+.wheel-detail-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wheel-kpi {
+  display: inline-block;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
   .sidebar {
@@ -1357,6 +1501,26 @@ a:hover {
 
   .stat-number {
     font-size: 22px;
+  }
+
+  .wheel-section {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .wheel-stage {
+    width: 250px;
+    height: 250px;
+  }
+
+  .wheel-spin-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 11px;
+  }
+
+  .wheel-detail-content {
+    padding: 20px;
   }
 
   .skills-grid,
@@ -1482,6 +1646,18 @@ a:hover {
   .trait {
     font-size: 12px;
     padding: 5px 12px;
+  }
+
+  .wheel-stage {
+    width: 220px;
+    height: 220px;
+  }
+
+  .wheel-spin-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 10px;
+    letter-spacing: 0.8px;
   }
 
   .journey-node {
