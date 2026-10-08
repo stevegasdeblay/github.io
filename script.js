@@ -395,7 +395,7 @@
       },
       {
         sender: 'Guillaume Jouquan', initials: 'GJ', color: '#36C5F0', time: 'Sep 29, 2022 · 10:23',
-        text: 'Amazing day! Feedbacks are really great!! Our partners on AppExchange were delighted to be there (Copado, sofacto, AWS, Gonexa, Secutix, Odaseva) <span class="slack-mention">@Steve Gasdeblay</span>, thanks for taking care of them 😊',
+        text: 'Amazing day! Feedbacks are really great!! Our partners on AgentExchange were delighted to be there (Copado, sofacto, AWS, Gonexa, Secutix, Odaseva) <span class="slack-mention">@Steve Gasdeblay</span>, thanks for taking care of them 😊',
         reactions: [{ emoji: '🎉', count: 5 }, { emoji: '🔥', count: 3 }]
       },
       {
