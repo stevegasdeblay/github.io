@@ -175,8 +175,7 @@
         title: 'Ecosystem Scaling',
         desc: 'Recruit, enable, and grow the ISV partner portfolio across regions and verticals. Design repeatable multi-regional co-sell programs and scalable enablement frameworks.',
         kpis: ['Tour de France des Éditeurs', '100+ Startups Engaged', '5-City Tour', '140% vs Target'],
-        color: '#f9ab00',
-        textColor: '#202124'
+        color: '#f9ab00'
       }
     ];
 
@@ -190,6 +189,15 @@
              parseInt(hex.slice(5, 7), 16);
     }
 
+    function hexToComponents(hex) {
+      return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+    }
+
+    function lighten(hex, amt) {
+      const [r,g,b] = hexToComponents(hex);
+      return 'rgb(' + Math.min(255, r + amt) + ',' + Math.min(255, g + amt) + ',' + Math.min(255, b + amt) + ')';
+    }
+
     function drawWheel() {
       const S = 400;
       const dpr = window.devicePixelRatio || 1;
@@ -198,22 +206,36 @@
       const ctx = wheelCanvas.getContext('2d');
       ctx.scale(dpr, dpr);
 
-      const cx = S / 2, cy = S / 2, r = cx - 8;
+      const cx = S / 2, cy = S / 2, r = cx - 10;
+      const innerR = 52;
+      const gap = 0.018;
 
       SEGMENTS.forEach((seg, i) => {
-        const a0 = i * ARC - Math.PI / 2;
-        const a1 = (i + 1) * ARC - Math.PI / 2;
-        const mid = a0 + ARC / 2;
+        const a0 = i * ARC - Math.PI / 2 + gap;
+        const a1 = (i + 1) * ARC - Math.PI / 2 - gap;
+        const mid = (a0 + a1) / 2;
 
         ctx.beginPath();
-        ctx.moveTo(cx, cy);
         ctx.arc(cx, cy, r, a0, a1);
+        ctx.arc(cx, cy, innerR, a1, a0, true);
         ctx.closePath();
-        ctx.fillStyle = seg.color;
+
+        const grd = ctx.createRadialGradient(cx, cy, innerR, cx, cy, r);
+        grd.addColorStop(0, lighten(seg.color, 40));
+        grd.addColorStop(0.5, seg.color);
+        grd.addColorStop(1, lighten(seg.color, -20));
+        ctx.fillStyle = grd;
         ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+
+        ctx.shadowColor = 'rgba(0,0,0,0.12)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 2;
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
         ctx.stroke();
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
 
         ctx.save();
         ctx.translate(cx, cy);
@@ -223,31 +245,38 @@
         const flip = nm > Math.PI / 2 && nm < Math.PI * 1.5;
         if (flip) ctx.rotate(Math.PI);
 
+        const tr = (r + innerR) / 2;
         ctx.fillStyle = seg.textColor || '#fff';
-        ctx.font = 'bold 12px "Google Sans", sans-serif';
+        ctx.font = '700 15.5px "Google Sans", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
-        const tr = r * 0.67;
+        ctx.shadowColor = 'rgba(0,0,0,0.35)';
+        ctx.shadowBlur = 3;
         seg.label.split('\n').forEach((line, j, arr) => {
-          const y = (j - (arr.length - 1) / 2) * 15;
+          const y = (j - (arr.length - 1) / 2) * 14;
           ctx.fillText(line, flip ? -tr : tr, y);
         });
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
         ctx.restore();
       });
 
       ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.arc(cx, cy, r + 2, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(0,0,0,0.04)';
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(cx, cy, 42, 0, Math.PI * 2);
-      ctx.fillStyle = '#fff';
+      ctx.arc(cx, cy, innerR, 0, Math.PI * 2);
+      const centerGrd = ctx.createRadialGradient(cx, cy - 10, 0, cx, cy, innerR);
+      centerGrd.addColorStop(0, '#ffffff');
+      centerGrd.addColorStop(1, '#f4f5f7');
+      ctx.fillStyle = centerGrd;
       ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = '#e8eaed';
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
       ctx.stroke();
     }
 
