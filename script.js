@@ -125,7 +125,7 @@
         label: 'Co-Sell\nRevenue',
         title: 'ISV Co-Sell Revenue',
         desc: 'Drive partner-sourced pipeline and close co-sell deals alongside field sales teams. Own quota attainment across a portfolio of ISV partners, from opportunity identification through negotiation to close.',
-        kpis: ['$2.1M Quota', '138% Attainment', '22 ISV Partners'],
+        kpis: ['$2.1M Quota', '138% Attainment', '7 ISV Partners'],
         color: '#1a73e8'
       },
       {
@@ -153,7 +153,7 @@
         label: 'Cross-Func\nAlignment',
         title: 'Cross-Functional Orchestration',
         desc: 'Act as ecosystem quarterback, orchestrating Sales, Solution Engineering, Product, Partner Operations, Legal and Marketing teams around joint partner opportunities. Drive deal velocity through internal advocacy and escalation management.',
-        kpis: ['Cross-Functional Collaboration'],
+        kpis: ['Collaboration'],
         color: '#d93025'
       },
       {
@@ -174,7 +174,7 @@
         label: 'Ecosystem\nScaling',
         title: 'Ecosystem Scaling',
         desc: 'Recruit, enable, and grow the ISV partner portfolio across regions and verticals. Design repeatable multi-regional co-sell programs and scalable enablement frameworks.',
-        kpis: ['Tour de France des Éditeurs', '100+ Startups Engaged', '5-City Tour', '140% vs Target'],
+        kpis: ['Tour de France', '100+ Startups Engaged', '5-City Tour', '140% vs Target'],
         color: '#f9ab00'
       }
     ];
